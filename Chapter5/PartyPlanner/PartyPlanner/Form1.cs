@@ -17,7 +17,7 @@ namespace PartyPlanner
         public Form1()
         {
             InitializeComponent();
-            dinnerParty = new DinnerParty() { NumberOfPeople = 5 };
+            dinnerParty = new DinnerParty((int)numericUpDown1.Value, healthyBox.Checked, fancyBox.Checked);
             dinnerParty.SetHealthyOption(false);
             dinnerParty.CalculateCostOfDecorations(true);
             DisplayDinnerPartyCost();
@@ -25,7 +25,7 @@ namespace PartyPlanner
 
         private void DisplayDinnerPartyCost()
         {
-            decimal Cost = dinnerParty.CalculateCost(checkBox2.Checked);
+            decimal Cost = dinnerParty.CalculateCost(healthyBox.Checked);
             labelCost.Text = Cost.ToString("c");
         }
 
@@ -35,13 +35,13 @@ namespace PartyPlanner
             DisplayDinnerPartyCost();
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void fancyBox_CheckedChanged(object sender, EventArgs e)
         {
             dinnerParty.CalculateCostOfDecorations(true);
             DisplayDinnerPartyCost();
         }
 
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        private void healthyBox_CheckedChanged(object sender, EventArgs e)
         {
             dinnerParty.SetHealthyOption(true);
             DisplayDinnerPartyCost();
