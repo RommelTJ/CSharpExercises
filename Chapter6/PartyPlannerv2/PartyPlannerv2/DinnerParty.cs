@@ -6,28 +6,12 @@ using System.Threading.Tasks;
 
 namespace PartyPlannerv2
 {
-    class DinnerParty
+    class DinnerParty : Party
     {
-        const int CostOfFoodPerPerson = 25;
-        private int numberOfPeople;
-        public int NumberOfPeople
-        {
-            get { return numberOfPeople; }
-            set
-            {
-                numberOfPeople = value;
-                CalculateCostOfDecorations(fancyDecorations);
-            }
-        }
-        private bool fancyDecorations;
-
         public decimal CostOfBeveragesPerPerson;
-        public decimal CostOfDecorations = 0;
 
-        public DinnerParty(int numberOfPeople, bool healthyOption, bool fancyDecorations)
+        public DinnerParty(int numberOfPeople, bool healthyOption, bool fancyDecorations) : base(numberOfPeople, fancyDecorations)
         {
-            NumberOfPeople = numberOfPeople;
-            this.fancyDecorations = fancyDecorations;
             SetHealthyOption(healthyOption);
             CalculateCostOfDecorations(fancyDecorations);
         }
@@ -44,22 +28,9 @@ namespace PartyPlannerv2
             }
         }
 
-        public void CalculateCostOfDecorations(bool fancy)
-        {
-            fancyDecorations = fancy;
-            if (fancy)
-            {
-                CostOfDecorations = (NumberOfPeople * 15.00M) + 50M;
-            }
-            else
-            {
-                CostOfDecorations = (NumberOfPeople * 7.50M) + 30M;
-            }
-        }
-
         public decimal CalculateCost(bool healthyOption)
         {
-            decimal totalCost = CostOfDecorations + ((CostOfBeveragesPerPerson + CostOfFoodPerPerson) * NumberOfPeople);
+            decimal totalCost = base.CalculateCost() + (CostOfBeveragesPerPerson * NumberOfPeople);
             if (healthyOption)
             {
                 return totalCost * 0.95M;
